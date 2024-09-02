@@ -3,7 +3,9 @@ const diaMesAno = document.getElementById("dia-mes-ano");
 const horaMinSeg = document.getElementById("hora-min-seg");
 
 const btnBaterPonto = document.getElementById("btn-bater-ponto");
-btnBaterPonto.addEventListener("click", register);
+
+const dialogBox = document.getElementById("dialog");
+const btnCancela = document.getElementById("botao-cancela");
 
 function getCurrentWeekDay() {
     const date = new Date();
@@ -53,9 +55,12 @@ function getCurrentDate() {
 diaSemana.textContent = getCurrentWeekDay();
 diaMesAno.textContent = getCurrentDate();
 
-function register() {   //abrir dialog com no minimo 
-    
-    alert("Bater ponto.");
-}
+btnBaterPonto.addEventListener("click", function() {
+    dialogBox.showModal();
+});
+
+btnCancela.addEventListener("click", function() {
+    dialogBox.close();
+})
 
 setInterval(printCurrentHour, 1000);    //repete a função a cada segundo
