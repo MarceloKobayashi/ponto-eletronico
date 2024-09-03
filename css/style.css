@@ -1,3 +1,10 @@
 .data-hora {
     text-align: center;
 }
+
+#btn-fechar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+

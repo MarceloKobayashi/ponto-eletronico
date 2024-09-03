@@ -17,26 +17,15 @@
         <button id="btn-bater-ponto">Bater Ponto</button>
     </menu>
 
-    <dialog id="dialog">
-        <form method="dialog">
-            <section>
-                <p>
-                    <label for="tipoPonto">Tipo de Ponto:</label>
-                    <select id="tipo-ponto">
-                        <option></option>
-                        <option>Entrada Trabalho</option>
-                        <option>Saída Trabalho</option>
-                        <option>Entrada Intervalo</option>
-                        <option>Saída Intervalo</option>
-                    </select>
-                </p>
-            </section>
-            
-            <menu>
-                <button id="botao-cancela" type="reset">Cancel</button>
-                <button type="submit">Confirm</button>
-            </menu>
-        </form>
+    <dialog id="dialog-ponto">
+        <p>Data</p>
+        <p>Hora</p>
+
+        <button>Entrada</button>
+        <button>Intervalo</button>
+        <button>Volta Intervalo</button>
+        <button>Saída</button>
+        <button id="btn-fechar">X</button>
         <!--conteudo modal de ponto-->
     </dialog>
 

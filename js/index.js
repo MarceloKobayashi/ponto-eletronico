@@ -4,8 +4,15 @@ const horaMinSeg = document.getElementById("hora-min-seg");
 
 const btnBaterPonto = document.getElementById("btn-bater-ponto");
 
-const dialogBox = document.getElementById("dialog");
-const btnCancela = document.getElementById("botao-cancela");
+const dialogPonto = document.getElementById("dialog-ponto");
+btnBaterPonto.addEventListener("click", function() {
+    dialogPonto.showModal();
+});
+
+const btnFechar = document.getElementById("btn-fechar");
+btnFechar.addEventListener("click", () => {
+    dialogPonto.close();
+});
 
 function getCurrentWeekDay() {
     const date = new Date();
@@ -26,16 +33,12 @@ function getCurrentWeekDay() {
 }
 
 function getCurrentHour() {
-    //padStart
-    //considerar formatos diferentes formatos
-    
+    const locale = navigator.language;
     const date = new Date();
 
-    let hora = date.getHours().toString().padStart(2, "0");
-    let min = date.getMinutes().toString().padStart(2, "0");
-    let sec = date.getSeconds().toString().padStart(2, "0");
+    const options = {hour: '2-digit', minute: '2-digit', second: '2-digit'};
 
-    return `${hora}:${min}:${sec}`;
+    return date.toLocaleTimeString(locale, options);
 }
 
 function printCurrentHour() {
@@ -43,24 +46,16 @@ function printCurrentHour() {
 }
 
 function getCurrentDate() {
-    //considerar o locale
+    const locale = navigator.language;
+    
     const date = new Date();
-    
-    const dia = date.getDate().toString().padStart(2, "0");
-    const mes = (date.getMonth() + 1).toString().padStart(2, "0");
-    
-    return `${dia}/${mes}/${date.getFullYear()}`;
+    const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+
+    return date.toLocaleDateString(locale, options);
 }
 
 diaSemana.textContent = getCurrentWeekDay();
 diaMesAno.textContent = getCurrentDate();
 
-btnBaterPonto.addEventListener("click", function() {
-    dialogBox.showModal();
-});
-
-btnCancela.addEventListener("click", function() {
-    dialogBox.close();
-})
 
 setInterval(printCurrentHour, 1000);    //repete a função a cada segundo
