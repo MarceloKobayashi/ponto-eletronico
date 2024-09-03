@@ -4,6 +4,12 @@ const horaMinSeg = document.getElementById("hora-min-seg");
 
 const btnBaterPonto = document.getElementById("btn-bater-ponto");
 
+const dialogData = document.getElementById("dialog-data");
+dialogData.textContent = "Data: " + getCurrentDate();
+
+const dialogHora = document.getElementById("dialog-hora");
+dialogHora.textContent = "Hora: " + getCurrentHour();
+
 const dialogPonto = document.getElementById("dialog-ponto");
 btnBaterPonto.addEventListener("click", function() {
     dialogPonto.showModal();
