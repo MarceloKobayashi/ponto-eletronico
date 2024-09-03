@@ -49,7 +49,10 @@ function getCurrentHour() {
 
 function printCurrentHour() {
     horaMinSeg.textContent = getCurrentHour();
+    dialogHora.textContent = getCurrentHour();
+    dialogData.textContent = getCurrentDate();
 }
+
 
 function getCurrentDate() {
     const locale = navigator.language;
