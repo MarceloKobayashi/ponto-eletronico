@@ -1,18 +1,42 @@
+function getUserLocation() {
+    navigator.geolocation.getCurrentPosition((position) => {
+        let userLocation = {
+            "lat": position.coords.latitude,
+            "long": position.coords.longitude
+        }
+
+        return userLocation;
+    });
+}
+
 const diaSemana = document.getElementById("dia-semana");
 const diaMesAno = document.getElementById("dia-mes-ano");
 const horaMinSeg = document.getElementById("hora-min-seg");
 
+diaSemana.textContent = getCurrentWeekDay();
+diaMesAno.textContent = getCurrentDate();
+
 const btnBaterPonto = document.getElementById("btn-bater-ponto");
 
 const dialogData = document.getElementById("dialog-data");
-dialogData.textContent = "Data: " + getCurrentDate();
+dialogData.textContent = getCurrentDate();
 
 const dialogHora = document.getElementById("dialog-hora");
-dialogHora.textContent = "Hora: " + getCurrentHour();
+dialogHora.textContent = getCurrentHour();
 
 const dialogPonto = document.getElementById("dialog-ponto");
 btnBaterPonto.addEventListener("click", function() {
     dialogPonto.showModal();
+});
+
+const btnDialogEntrada = document.getElementById("btn-dialog-entrada");
+btnDialogEntrada.addEventListener("click", () => {
+    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("entrada")));
+});
+
+const btnDialogSaida = document.getElementById("btn-dialog-saida");
+btnDialogSaida.addEventListener("click", () => {
+    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("saida")));
 });
 
 const btnFechar = document.getElementById("btn-fechar");
@@ -49,8 +73,8 @@ function getCurrentHour() {
 
 function printCurrentHour() {
     horaMinSeg.textContent = getCurrentHour();
-    dialogHora.textContent = getCurrentHour();
-    dialogData.textContent = getCurrentDate();
+    dialogHora.textContent = "Hora: " + getCurrentHour();
+    dialogData.textContent = "Data: " + getCurrentDate();
 }
 
 
@@ -63,8 +87,21 @@ function getCurrentDate() {
     return date.toLocaleDateString(locale, options);
 }
 
-diaSemana.textContent = getCurrentWeekDay();
-diaMesAno.textContent = getCurrentDate();
+function getObjectRegister(registerType) {
+    ponto = {
+        "date": getCurrentDate(),
+        "time": getCurrentHour(),
+        "location": getUserLocation(),
+        "id": 1,
+        "type": registerType
+    };
+
+    return ponto;
+}
+
+function saveRegisterLocalStorage(register) {
+    localStorage.setItem("register", register);
+}
 
 
 setInterval(printCurrentHour, 1000);    //repete a função a cada segundo
