@@ -1,11 +1,16 @@
-function getUserLocation() {
-    navigator.geolocation.getCurrentPosition((position) => {
-        let userLocation = {
-            "lat": position.coords.latitude,
-            "long": position.coords.longitude
+async function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition((position) => {
+            let userLocation = {
+                "lat": position.coords.latitude,
+                "long": position.coords.longitude
+            };
+            resolve(userLocation);
+        },
+        (error) => {
+            reject(error);
         }
-
-        return userLocation;
+        );
     });
 }
 
@@ -87,7 +92,7 @@ function getCurrentDate() {
     return date.toLocaleDateString(locale, options);
 }
 
-function getObjectRegister(registerType) {
+async function getObjectRegister(registerType) {
     ponto = {
         "date": getCurrentDate(),
         "time": getCurrentHour(),
