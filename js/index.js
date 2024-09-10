@@ -24,27 +24,44 @@ btnBaterPonto.addEventListener("click", function() {
     dialogPonto.showModal();
 });
 
+let registerLocalStorage = getRegisterLocalStorage();
+
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 btnDialogBaterPonto.addEventListener("click", () => {
-    let dataAtual = getCurrentDate();
-    let horaAtual = getCurrentHour();
-    let localizacaoAtual = getUserLocation();
-
-    let tipoPonto = document.getElementById("tipos-ponto").value;
 
     let ponto = {
-        "data": dataAtual,
-        "hora": horaAtual,
+        "data": getCurrentDate(),
+        "hora": getCurrentHour(),
         "localizacao": {
-            "latitude": localizacaoAtual.lat,
-            "longitude": localizacaoAtual.long
+            "latitude": getUserLocation().lat,
+            "longitude": getUserLocation().long
         },
         "id": 1,
-        "tipo": tipoPonto
+        "tipo": document.getElementById("tipos-ponto").value
     }
 
     console.log(ponto);
+    
+    saveRegisterLocalStorage(ponto);
+
+    dialogPonto.close();
+
 })
+
+function saveRegisterLocalStorage(register) {
+    registerLocalStorage.push(register)
+    localStorage.setItem("register", JSON.stringify(registerLocalStorage));
+}
+
+function getRegisterLocalStorage() {
+    let registers = localStorage.getItem("register");
+
+    if (!registers) {
+        return [];
+    }
+
+    return registers;
+}
 
 const btnFechar = document.getElementById("btn-fechar");
 btnFechar.addEventListener("click", () => {
