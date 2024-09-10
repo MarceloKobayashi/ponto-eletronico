@@ -28,6 +28,7 @@ let registerLocalStorage = getRegisterLocalStorage();
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 btnDialogBaterPonto.addEventListener("click", () => {
+    let typeRegister = document.getElementById("tipos-ponto").value;
 
     let ponto = {
         "data": getCurrentDate(),
@@ -43,8 +44,10 @@ btnDialogBaterPonto.addEventListener("click", () => {
     console.log(ponto);
     
     saveRegisterLocalStorage(ponto);
+    localStorage.setItem("lastTypeRegister", typeRegister);
 
     dialogPonto.close();
+    //colocar um aviso da confirmação ou não do registro
 
 })
 
@@ -60,7 +63,7 @@ function getRegisterLocalStorage() {
         return [];
     }
 
-    return registers;
+    return JSON.parse(registers);
 }
 
 const btnFechar = document.getElementById("btn-fechar");
@@ -114,5 +117,5 @@ function getCurrentDate() {
 diaSemana.textContent = getCurrentWeekDay();
 diaMesAno.textContent = getCurrentDate();
 
-
+printCurrentHour();
 setInterval(printCurrentHour, 1000);    //repete a função a cada segundo
