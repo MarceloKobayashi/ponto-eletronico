@@ -18,15 +18,27 @@
     </menu>
 
     <dialog id="dialog-ponto">
-        <p id="dialog-data"></p>
-        <p id="dialog-hora"></p>
+        <div class="div-dialog-data">
+            <p id="dialog-data"></p>
+            <button id="btn-dialog-editar-data">Editar</button>
+        </div>
+        
+        <div class="div-dialog-hora">
+            <p id="dialog-hora"></p>
+            <button id="btn-dialog-editar-hora">Editar</button>
+        </div>
 
-        <button id="btn-dialog-entrada">Entrada</button>
-        <button>Intervalo</button>
-        <button>Volta Intervalo</button>
-        <button id="btn-dialog-saida">Saída</button>
+        <select name="tipos-ponto" id="tipos-ponto">
+            <option value="entrada">Entrada</option>
+            <option value="intervalo">Intervalo</option>
+            <option value="volta-intervalo">Volta Intervalo</option>
+            <option value="saida">Saida</option>
+        </select>
+
+        <button id="btn-dialog-bater-ponto">Registrar Ponto</button>
+
         <button id="btn-fechar">X</button>
-        <!--conteudo modal de ponto-->
+        
     </dialog>
 
     <!--criar histórico dos últimos n registros-->

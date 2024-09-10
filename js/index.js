@@ -1,16 +1,9 @@
 async function getUserLocation() {
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition((position) => {
-            let userLocation = {
-                "lat": position.coords.latitude,
-                "long": position.coords.longitude
-            };
-            resolve(userLocation);
-        },
-        (error) => {
-            reject(error);
-        }
-        );
+    return navigator.geolocation.getCurrentPosition((position) => {
+        const userLocation = {
+            "lat": position.coords.latitude,
+            "long": position.coords.longitude
+        };
     });
 }
 
@@ -18,31 +11,40 @@ const diaSemana = document.getElementById("dia-semana");
 const diaMesAno = document.getElementById("dia-mes-ano");
 const horaMinSeg = document.getElementById("hora-min-seg");
 
-diaSemana.textContent = getCurrentWeekDay();
-diaMesAno.textContent = getCurrentDate();
-
 const btnBaterPonto = document.getElementById("btn-bater-ponto");
 
 const dialogData = document.getElementById("dialog-data");
-dialogData.textContent = getCurrentDate();
+dialogData.textContent = "Data: " + getCurrentDate();
 
 const dialogHora = document.getElementById("dialog-hora");
-dialogHora.textContent = getCurrentHour();
+dialogHora.textContent = "Hora: " + getCurrentHour();
 
 const dialogPonto = document.getElementById("dialog-ponto");
 btnBaterPonto.addEventListener("click", function() {
     dialogPonto.showModal();
 });
 
-const btnDialogEntrada = document.getElementById("btn-dialog-entrada");
-btnDialogEntrada.addEventListener("click", () => {
-    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("entrada")));
-});
+const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
+btnDialogBaterPonto.addEventListener("click", () => {
+    let dataAtual = getCurrentDate();
+    let horaAtual = getCurrentHour();
+    let localizacaoAtual = getUserLocation();
 
-const btnDialogSaida = document.getElementById("btn-dialog-saida");
-btnDialogSaida.addEventListener("click", () => {
-    saveRegisterLocalStorage(JSON.stringify(getObjectRegister("saida")));
-});
+    let tipoPonto = document.getElementById("tipos-ponto").value;
+
+    let ponto = {
+        "data": dataAtual,
+        "hora": horaAtual,
+        "localizacao": {
+            "latitude": localizacaoAtual.lat,
+            "longitude": localizacaoAtual.long
+        },
+        "id": 1,
+        "tipo": tipoPonto
+    }
+
+    console.log(ponto);
+})
 
 const btnFechar = document.getElementById("btn-fechar");
 btnFechar.addEventListener("click", () => {
@@ -78,8 +80,8 @@ function getCurrentHour() {
 
 function printCurrentHour() {
     horaMinSeg.textContent = getCurrentHour();
-    dialogHora.textContent = "Hora: " + getCurrentHour();
-    dialogData.textContent = "Data: " + getCurrentDate();
+    dialogHora.textContent = getCurrentHour();
+    dialogData.textContent = getCurrentDate();
 }
 
 
@@ -92,21 +94,8 @@ function getCurrentDate() {
     return date.toLocaleDateString(locale, options);
 }
 
-async function getObjectRegister(registerType) {
-    ponto = {
-        "date": getCurrentDate(),
-        "time": getCurrentHour(),
-        "location": getUserLocation(),
-        "id": 1,
-        "type": registerType
-    };
-
-    return ponto;
-}
-
-function saveRegisterLocalStorage(register) {
-    localStorage.setItem("register", register);
-}
+diaSemana.textContent = getCurrentWeekDay();
+diaMesAno.textContent = getCurrentDate();
 
 
 setInterval(printCurrentHour, 1000);    //repete a função a cada segundo

@@ -2,6 +2,18 @@
     text-align: center;
 }
 
+.div-dialog-data {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.div-dialog-hora {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
 #btn-fechar {
     position: absolute;
     top: 1rem;
