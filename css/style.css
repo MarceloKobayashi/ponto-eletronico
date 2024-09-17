@@ -20,3 +20,50 @@
     right: 1rem;
 }
 
+/* Estilos gerais do alerta */
+.alert {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Estados do alerta */
+.alert.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.alert.hidden {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+}
+
+/* Tipos de alerta */
+.alert.success {
+    background-color: #28a745; /* Verde para sucesso */
+    color: white;
+}
+
+.alert.error {
+    background-color: #dc3545; /* Vermelho para erro */
+    color: white;
+}
+
+/* Botão de fechar */
+.close-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}

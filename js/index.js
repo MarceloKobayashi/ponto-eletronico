@@ -1,3 +1,5 @@
+import showAlert from './alert.js';
+
 async function getUserLocation() {
     return navigator.geolocation.getCurrentPosition((position) => {
         const userLocation = {
@@ -22,39 +24,55 @@ dialogHora.textContent = "Hora: " + getCurrentHour();
 const dialogPonto = document.getElementById("dialog-ponto");
 btnBaterPonto.addEventListener("click", function() {
     dialogPonto.showModal();
+    let lastRegisterText = "Último registro: " + localStorage.getItem("lastDateRegister") + " - " + localStorage.getItem("lastTimeRegister") + " | " + localStorage.getItem("lastTypeRegister");
+    document.getElementById("dialog-last-register").textContent = lastRegisterText;
 });
 
 let registerLocalStorage = getRegisterLocalStorage();
 
+const divAlertaRegistroPonto = document.getElementById("alerta-registro-ponto");
+
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 btnDialogBaterPonto.addEventListener("click", () => {
-    let typeRegister = document.getElementById("tipos-ponto").value;
+    try {
 
-    let ponto = {
-        "data": getCurrentDate(),
-        "hora": getCurrentHour(),
-        "localizacao": {
-            "latitude": getUserLocation().lat,
-            "longitude": getUserLocation().long
-        },
-        "id": 1,
-        "tipo": document.getElementById("tipos-ponto").value
+        const typeRegisterElement = document.getElementById("tipos-ponto");
+        let selectedType = typeRegisterElement.value;
+        
+        
+        let ponto = {
+            "data": getCurrentDate(),
+            "hora": getCurrentHour(),
+            "localizacao": {
+                "latitude": getUserLocation().lat,
+                "longitude": getUserLocation().long
+            },
+            "id": 1,
+            "tipo": selectedType
+        }
+        
+        console.log(ponto);
+        
+        saveRegisterLocalStorage(ponto);
+        localStorage.setItem("lastTypeRegister", selectedType);
+        localStorage.setItem("lastDateRegister", ponto.data);
+        localStorage.setItem("lastTimeRegister", ponto.hora);
+        
+        printCurrentHour();
+        
+        dialogPonto.close();
+        
+        showAlert('Registro de ponto realizado com sucesso!', 'success');
+    } catch (error) {
+        showAlert('Erro em registrar ponto.', 'error');
     }
-
-    console.log(ponto);
+        
+    })
     
-    saveRegisterLocalStorage(ponto);
-    localStorage.setItem("lastTypeRegister", typeRegister);
-
-    dialogPonto.close();
-    //colocar um aviso da confirmação ou não do registro
-
-})
-
-function saveRegisterLocalStorage(register) {
-    registerLocalStorage.push(register)
-    localStorage.setItem("register", JSON.stringify(registerLocalStorage));
-}
+    function saveRegisterLocalStorage(register) {
+        registerLocalStorage.push(register)
+        localStorage.setItem("register", JSON.stringify(registerLocalStorage));
+    }
 
 function getRegisterLocalStorage() {
     let registers = localStorage.getItem("register");

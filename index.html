@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <div id="alerta-registro-ponto" class="alert hidden">
+        <span id="alerta-mensagem"></span>
+        <button id="btn-fechar-alerta" class="close-btn">&times;</button>
+        <p>Ponto registrado com sucesso</p>
+    </div>
     <div class="data-hora">
         <p id="dia-semana"></p>
         <p id="dia-mes-ano"></p>
@@ -36,6 +41,7 @@
         </select>
 
         <button id="btn-dialog-bater-ponto">Registrar Ponto</button>
+        <p id="dialog-last-register"></p>
 
         <button id="btn-fechar">X</button>
         
@@ -44,6 +50,6 @@
     <!--criar histórico dos últimos n registros-->
     <!--criar footer para alerta-->
 
-    <script src="js/index.js"></script>
+    <script type="module" src="js/index.js"></script>
 </body>
 </html>
