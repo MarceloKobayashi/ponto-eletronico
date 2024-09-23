@@ -1,13 +1,22 @@
 import showAlert from './alert.js';
 
 async function getUserLocation() {
-    return navigator.geolocation.getCurrentPosition((position) => {
-        const userLocation = {
-            "lat": position.coords.latitude,
-            "long": position.coords.longitude
-        };
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLocation = {
+                    lat: position.coords.latitude,
+                    long: position.coords.longitude
+                };
+                resolve(userLocation);
+            },
+            (error) => {
+                reject(error);
+            }
+        );
     });
 }
+
 
 const diaSemana = document.getElementById("dia-semana");
 const diaMesAno = document.getElementById("dia-mes-ano");
@@ -33,19 +42,20 @@ let registerLocalStorage = getRegisterLocalStorage();
 const divAlertaRegistroPonto = document.getElementById("alerta-registro-ponto");
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
-btnDialogBaterPonto.addEventListener("click", () => {
+btnDialogBaterPonto.addEventListener("click", async () => {
     try {
 
         const typeRegisterElement = document.getElementById("tipos-ponto");
         let selectedType = typeRegisterElement.value;
-        
+        const location = await getUserLocation();
+
         
         let ponto = {
             "data": getCurrentDate(),
             "hora": getCurrentHour(),
             "localizacao": {
-                "latitude": getUserLocation().lat,
-                "longitude": getUserLocation().long
+                "latitude": location.lat,
+                "longitude": location.long
             },
             "id": 1,
             "tipo": selectedType
@@ -69,10 +79,10 @@ btnDialogBaterPonto.addEventListener("click", () => {
         
     })
     
-    function saveRegisterLocalStorage(register) {
-        registerLocalStorage.push(register)
-        localStorage.setItem("register", JSON.stringify(registerLocalStorage));
-    }
+function saveRegisterLocalStorage(register) {
+    registerLocalStorage.push(register)
+    localStorage.setItem("register", JSON.stringify(registerLocalStorage));
+}
 
 function getRegisterLocalStorage() {
     let registers = localStorage.getItem("register");

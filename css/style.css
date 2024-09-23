@@ -67,3 +67,11 @@
     top: 8px;
     right: 8px;
 }
+
+.hidden {
+    opacity: 0;
+}
+
+.show {
+    opacity: 1;
+}
