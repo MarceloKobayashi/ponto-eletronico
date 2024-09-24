@@ -1,23 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
+
+
+.btn-bater-ponto {
+    text-align: center;
+}
+
+#btn-bater-ponto {
+    padding: 7% 15%;
+
+    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-bater-ponto:hover {
+    color: #E5E5E5;
+    background-color: black;
+
+    font-weight: bold;
+}
+
 .data-hora {
     text-align: center;
+
+    font-size:4rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#dialog-ponto {
+    padding: 1% 5%;
 }
 
 .div-dialog-data {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0 1rem;
+
+    font-size: 3rem;
+    font-style: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-dialog-editar-data {
+    padding: 1.5% 7%;
+
+    font-size: 2rem;
+    font-style: 'Montserrat', sans-serif;
+}
+
+#btn-dialog-editar-data:hover {
+    background-color: black;
+    color: #E5E5E5;
+    font-weight: bold;
 }
 
 .div-dialog-hora {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 0 4rem;
+
+    font-size: 3rem;
+    font-style: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-dialog-editar-hora {
+    padding: 1.5% 7%;
+
+    font-size: 2rem;
+    font-style: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-dialog-editar-hora:hover {
+    background-color: black;
+    color: #E5E5E5;
+
+    font-weight: bold;
 }
 
 #btn-fechar {
     position: absolute;
     top: 1rem;
     right: 1rem;
+}
+
+#tipos-ponto {
+    padding: 2.5% 0;
+
+    text-align: center;
+
+    font-size: 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+.setinha {
+    appearance: none;
+}
+
+#btn-dialog-bater-ponto {
+    padding: 2.5%;
+
+    font-size: 2rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-dialog-bater-ponto:hover {
+    background-color: black;
+    color: #E5E5E5;
+}
+
+#dialog-last-register {
+    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-fechar {
+    padding: 1.5% 3%;
+
+    font-size: 2.5rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-fechar:hover {
+    background-color: red;
 }
 
 /* Estilos gerais do alerta */
