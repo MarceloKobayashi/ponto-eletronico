@@ -17,6 +17,26 @@ async function getUserLocation() {
     });
 }
 
+function lerArquivo(file) {
+    return new Promise((resolve, reject) => {
+        if (!file) {
+            resolve(null);
+            return;
+        }
+
+        const reader = new FileReader();
+        
+        reader.onload = (event) => {
+            resolve(event.target.result);
+        };
+
+        reader.onerror = () => {
+            reject(new Error("Erro ao ler o arquivo."));
+        };
+
+        reader.readAsText(file);
+    });
+}
 
 const diaSemana = document.getElementById("dia-semana");
 const diaMesAno = document.getElementById("dia-mes-ano");
@@ -39,17 +59,19 @@ btnBaterPonto.addEventListener("click", function() {
 
 let registerLocalStorage = getRegisterLocalStorage();
 
-const divAlertaRegistroPonto = document.getElementById("alerta-registro-ponto");
-
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 btnDialogBaterPonto.addEventListener("click", async () => {
     try {
 
+        const observacaoPonto = document.getElementById("observacao").value;
+        const arquivoPonto = document.getElementById("anexo").files[0];
+        
         const typeRegisterElement = document.getElementById("tipos-ponto");
         let selectedType = typeRegisterElement.value;
         const location = await getUserLocation();
-
         
+        const arquivoConteudo = await lerArquivo(arquivoPonto);
+
         let ponto = {
             "data": getCurrentDate(),
             "hora": getCurrentHour(),
@@ -58,7 +80,9 @@ btnDialogBaterPonto.addEventListener("click", async () => {
                 "longitude": location.long
             },
             "id": 1,
-            "tipo": selectedType
+            "tipo": selectedType,
+            "observação": observacaoPonto,
+            "arquivo": arquivoConteudo
         }
         
         console.log(ponto);
@@ -128,8 +152,8 @@ function getCurrentHour() {
 
 function printCurrentHour() {
     horaMinSeg.textContent = getCurrentHour();
-    dialogHora.textContent = getCurrentHour();
-    dialogData.textContent = getCurrentDate();
+    dialogHora.textContent = "Hora: " + getCurrentHour();
+    dialogData.textContent = "Data: " + getCurrentDate();
 }
 
 

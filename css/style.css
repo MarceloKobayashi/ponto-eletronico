@@ -1,6 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap');
-
-
 .btn-bater-ponto {
     text-align: center;
 }
@@ -20,12 +17,32 @@
     font-weight: bold;
 }
 
+.btn-relatorio {
+    text-align: center;
+}
+
+#btn-relatorio {
+    padding: 7% 12%;
+
+    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+#btn-relatorio:hover {
+    color: #E5E5E5;
+    background-color: black;
+
+    font-weight: bold;
+}
+
 .data-hora {
     text-align: center;
 
     font-size:4rem;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+    font-style: normal;
 }
 
 #dialog-ponto {
@@ -80,6 +97,20 @@
     font-weight: bold;
 }
 
+
+.div-observacao {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea, .input-anexo {
+    height: 100px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+
 #btn-fechar {
     position: absolute;
     top: 1rem;
@@ -131,43 +162,25 @@
     background-color: red;
 }
 
-/* Estilos gerais do alerta */
 .alert {
     position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 16px;
-    border-radius: 4px;
-    font-size: 16px;
-    z-index: 9999;
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.5s ease;
+
+    bottom: 1.25rem;
+    right: 1.25rem;
+
+    padding: 20px;
 }
 
-/* Estados do alerta */
-.alert.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-}
-
-.alert.hidden {
-    opacity: 0;
-    transform: translateX(-50%) translateY(-100%);
-}
-
-/* Tipos de alerta */
 .alert.success {
-    background-color: #28a745; /* Verde para sucesso */
+    background-color: #28a745;
     color: white;
 }
 
 .alert.error {
-    background-color: #dc3545; /* Vermelho para erro */
+    background-color: #dc3545;
     color: white;
 }
 
-/* Botão de fechar */
 .close-btn {
     background: none;
     border: none;
@@ -185,4 +198,14 @@
 
 .show {
     opacity: 1;
+}
+
+#alerta-registro-ponto p {
+    text-align: center;
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+    font-style: normal;
 }

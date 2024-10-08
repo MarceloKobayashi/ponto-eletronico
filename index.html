@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Controle de Ponto</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="alerta-registro-ponto" class="alert hidden">
         <span id="alerta-mensagem"></span>
-        <button id="btn-fechar-alerta" class="close-btn">&times;</button>
+        <button id="btn-fechar-alerta" class="close-btn">x</button>
     </div>
     <div class="data-hora">
         <p id="dia-semana"></p>
@@ -19,6 +22,12 @@
 
     <div class="btn-bater-ponto">    
         <button id="btn-bater-ponto">Bater Ponto</button>
+    </div>
+
+    <div class="btn-relatorio">
+        <a href="relatorio.html">
+            <button id="btn-relatorio">Abrir Relatório</button>
+        </a> 
     </div>
 
     <dialog id="dialog-ponto">
@@ -31,6 +40,12 @@
             <p id="dialog-hora"></p>
             <button id="btn-dialog-editar-hora">Editar</button>
         </div>
+
+        <div class="div-observacao">
+            <textarea id="observacao" rows="4" cols="50" placeholder="Adicione sua observação aqui..."></textarea>
+            <input type="file" id="anexo" accept="*/*" class="input-anexo">
+        </div>
+    
 
         <select name="tipos-ponto" id="tipos-ponto" class="setinha">
             <option value="entrada">Entrada</option>
@@ -46,9 +61,7 @@
         
     </dialog>
 
-    <!--criar histórico dos últimos n registros-->
-    <!--criar footer para alerta-->
-
     <script type="module" src="js/index.js"></script>
+    <!--<script type="module" src="js/dialog.js"></script>!-->
 </body>
 </html>
