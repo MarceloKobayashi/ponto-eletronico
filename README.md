@@ -1,7 +1,7 @@
 # ponto-eletronico
 Sistema de bater ponto
 
-# Trabalho Feriad
+# Trabalho Feriado
 
 - Fazer o editar hora e data no dialog
 - Fazer a página que mostre o historico dos pontos
