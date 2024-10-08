@@ -1,7 +1,8 @@
 # ponto-eletronico
 Sistema de bater ponto
 
-# Trabalho Feriado
+# Trabalho Feriado 
+- airton.junior@ceub.edu.br
 
 - Fazer o editar hora e data no dialog
 - Fazer a página que mostre o historico dos pontos
