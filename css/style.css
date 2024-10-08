@@ -3,7 +3,7 @@
 }
 
 #btn-bater-ponto {
-    padding: 7% 15%;
+    padding: 3% 9.4%;
 
     font-size: 3rem;
     font-family: 'Montserrat', sans-serif;
@@ -22,7 +22,7 @@
 }
 
 #btn-relatorio {
-    padding: 7% 12%;
+    padding: 3% 8%;
 
     font-size: 3rem;
     font-family: 'Montserrat', sans-serif;
@@ -109,7 +109,6 @@ textarea, .input-anexo {
     box-sizing: border-box;
     margin-bottom: 10px;
 }
-
 
 #btn-fechar {
     position: absolute;
