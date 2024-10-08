@@ -10,6 +10,8 @@ function renderList() {
 
         divRegistro.innerHTML = `<p>${register.data}</p>`;
 
+        //data x date
+
         containerRegisters.appendChild(divRegistro);
     })
 }
