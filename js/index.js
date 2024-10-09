@@ -222,18 +222,33 @@ btnDialogEditarData.addEventListener("click", () => {
         });
     } else {
         const input = document.getElementById("input-dialog-data");
-        const novaData = input.value;
+        let novaData = input.value;
 
-        if (dataValida(novaData)) {
+        if (novaData.length === 10 && dataValida(novaData) && !dataNoFuturo(novaData)) {
             dataOriginal = novaData;
             dialogData.textContent = "Data: " + novaData;
+        } else if (dataNoFuturo(novaData)){
+            novaData = getCurrentDate();
+            dialogData.textContent = "Data: " + novaData;
+            showAlert("Data no futuro! Insira uma data válida.", "error");
         } else {
-            dialogData.textContent = "Data: " + dataOriginal;
+            novaData = getCurrentDate(); 
+            dialogData.textContent = "Data: " + novaData;
             showAlert("Data inválida! Voltando para a data atual.", "error"); 
         }
 
         btnDialogEditarData.textContent = "Editar";
         editandoData = false;
+
+        //Verifica se ao mudar a data, o usuário não tinha trocado para uma hora no futuro, Ex.: Troca a data para ontem (assim pode colocar uma hora adiantada) e depois troca para hoje
+        // permanecendo a hora no futuro. Essa parte serve para evitar isso.
+        const inputHora = document.getElementById("input-dialog-hora");
+        let novaHora = inputHora ? inputHora.value : horaOriginal;
+        if (novaHora && horaNoFuturo(novaData, novaHora)) {
+            novaHora = getCurrentHour();
+            dialogHora.textContent = "Hora: " + novaHora;
+            showAlert("Hora no futuro! Voltando para a hora atual.", "error");
+        }
     }
 });
 
@@ -252,8 +267,18 @@ function formatarData(data) {
 function dataValida(dataString) {
     const [dia, mes, ano] = dataString.split('/');
     const date = new Date(`${ano}-${mes}-${dia}`);
-
+    
     return date instanceof Date && !isNaN(date);
+}
+
+function dataNoFuturo(data) {
+    const [dia, mes, ano] = data.split('/').map(Number);
+    const dataInserida = new Date(ano, mes - 1, dia);
+    const dataAtual = new Date();
+
+    dataAtual.setHours(0, 0, 0, 0); //sem comparar as horas
+
+    return dataInserida > dataAtual;
 }
 
 const btnDialogEditarHora = document.getElementById("btn-dialog-editar-hora");
@@ -280,13 +305,19 @@ btnDialogEditarHora.addEventListener("click", () => {
         });
     } else  {
         const input = document.getElementById("input-dialog-hora");
-        const novaHora = input.value;
+        let novaHora = input.value;
+        const novaData = dataOriginal;
 
-        if (horaValida(novaHora)) {
+        if (novaHora.length === 8 && horaValida(novaHora) && !horaNoFuturo(novaData, novaHora)) {
             horaOriginal = novaHora;
             dialogHora.textContent = "Hora: " + novaHora;
+        } else if(horaNoFuturo(novaData, novaHora)) {
+            novaHora = getCurrentHour();
+            dialogHora.textContent = "Hora: " + novaHora;
+            showAlert("Hora no futuro! Voltando para a hora atual.", "error");
         } else {
-            dialogHora.textContent = "Hora: " + horaOriginal;
+            novaHora = getCurrentHour();
+            dialogHora.textContent = "Hora: " + novaHora;
             showAlert("Hora inválida! voltando para a hora atual.", "error");
         }
 
@@ -324,4 +355,15 @@ function horaValida(horaString) {
     }
 
     return true;
+}
+
+function horaNoFuturo(data, hora) {
+
+    const [dia, mes, ano] = data.split("/").map(Number);
+    const [horaPart, minPart, segPart] = hora.split(":").map(Number);
+
+    const dataInserida = new Date(ano, mes - 1, dia, horaPart, minPart, segPart);
+    const dataAtual = new Date();
+
+    return dataInserida > dataAtual;
 }
