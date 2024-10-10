@@ -1,0 +1,66 @@
+/*Legendas*/
+.color-box {
+    display: inline-block;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.6rem;
+}
+
+.black {
+    background-color: black;
+}
+.blue {
+    background-color: blue;
+}
+.red {
+    background-color: red;
+}
+
+.registro-dados {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+
+.tipo, .hora, .observacao, .arquivo {
+    flex: 1;
+
+    /*Evita que o texto passe do limite, adicionando ...*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.div-data {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; 
+}
+
+.registro-botoes {
+    display: flex;
+    gap: 1rem;
+}
+
+button {
+    padding: 0.5rem 0.8rem;
+}
+
+.registros {
+    border-left: 0.3rem solid;
+    padding-left: 0.6rem;
+}
+
+.registro-passado {
+    color: red;
+    background-color: #f0f0f0;
+    border-left: 0.3rem solid red;
+    padding-left: 0.6rem;
+}
+
+.registro-observacao {
+    color: blue;
+    background-color: #C4C4C4;
+    border-left: 0.3rem solid blue;
+    padding-left: 0.6rem;
+}

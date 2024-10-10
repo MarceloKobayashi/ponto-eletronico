@@ -5,10 +5,10 @@ function renderList() {
     const containerRegisters = document.getElementById("registros-relatorio");
 
     const tipoAbreviado = {
-        "entrada": "E",
-        "intervalo": "I",
-        "volta-intervalo": "V",
-        "saida": "S"
+        "entrada": "E - Entrada",
+        "intervalo": "I - Intervalo",
+        "volta-intervalo": "V - Volta intervalo",
+        "saida": "S - Saída"
     }
 
     if (containerRegisters) {
@@ -28,29 +28,39 @@ function renderList() {
             const registrosPorData = grupoPorData[data];
 
             const divData = document.createElement("div");
+            divData.classList.add("div-data")
             divData.innerHTML = `<p>> ${data}: </p>`;
             containerRegisters.appendChild(divData);
 
             registrosPorData.forEach(register => {         
                 const divRegistro = document.createElement("div");
+                divRegistro.classList.add("registros");
 
                 if (register.observação === "") {
                     register.observação = "Sem observação.";
+                } else {
+                    const classeObservacao = divRegistro.classList.add("registro-observacao");
                 }
 
                 const tipoAbrev = tipoAbreviado[register.tipo];
 
+                const classePassado = register.noPassado ? divRegistro.classList.add("registro-passado") : '';
+
                 const dadosRegistro = `
-                    <p style="display: flex; align-items: center;">
-                        <span style="width: 10%; padding-right: 5px;">${tipoAbrev}</span>
-                        <span style="width: 15%; padding-right: 5px;">| ${register.hora}</span>
-                        <span style="width: 30%; padding-right: 5px;">| ${register.observação || 'Sem observação'}</span>
-                        <span style="width: 30%;">| ${register.arquivo || 'Sem anexo'}</span>
-                    </p>
+                    <div>
+                        <div class="registro-dados">
+                            <span class="tipo">${tipoAbrev}</span>
+                            <span class="hora">| ${register.hora}</span>
+                            <span class="observacao">| ${register.observação || 'Sem observação'}</span>
+                            <span class="arquivo">| ${register.arquivo || 'Sem anexo'}</span>
+                            <div class="registro-botoes">
+                                <button class="btn-editar">Editar</button>
+                                <button class="btn-excluir">Excluir</button>
+                            </div>
+                        </div>
+                    </div>
                 `;
                 divRegistro.innerHTML = dadosRegistro;
-                    
-                    //data x date
                     
                 containerRegisters.appendChild(divRegistro);
             });

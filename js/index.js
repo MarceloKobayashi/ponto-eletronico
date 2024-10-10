@@ -75,6 +75,7 @@ btnBaterPonto.addEventListener("click", function() {
 });
 
 let registerLocalStorage = getRegisterLocalStorage();
+let passado = false;
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 btnDialogBaterPonto.addEventListener("click", async () => {
@@ -102,7 +103,8 @@ btnDialogBaterPonto.addEventListener("click", async () => {
                 "id": 1,
                 "tipo": selectedType,
                 "observação": observacaoPonto,
-                "arquivo": arquivoConteudo
+                "arquivo": arquivoConteudo,
+                "noPassado": passado
             }
             
             console.log(ponto);
@@ -116,6 +118,7 @@ btnDialogBaterPonto.addEventListener("click", async () => {
             
             dialogPonto.close();
             isDialogOpen = false;
+            passado = false;
             
             showAlert('Registro de ponto realizado com sucesso!', 'success');
         } catch (fileError) {
@@ -227,6 +230,7 @@ btnDialogEditarData.addEventListener("click", () => {
         if (novaData.length === 10 && dataValida(novaData) && !dataNoFuturo(novaData)) {
             dataOriginal = novaData;
             dialogData.textContent = "Data: " + novaData;
+            passado = true;
         } else if (dataNoFuturo(novaData)){
             novaData = getCurrentDate();
             dialogData.textContent = "Data: " + novaData;
@@ -311,6 +315,7 @@ btnDialogEditarHora.addEventListener("click", () => {
         if (novaHora.length === 8 && horaValida(novaHora) && !horaNoFuturo(novaData, novaHora)) {
             horaOriginal = novaHora;
             dialogHora.textContent = "Hora: " + novaHora;
+            passado = true;
         } else if(horaNoFuturo(novaData, novaHora)) {
             novaHora = getCurrentHour();
             dialogHora.textContent = "Hora: " + novaHora;
