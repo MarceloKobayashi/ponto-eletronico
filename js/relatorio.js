@@ -1,4 +1,19 @@
-function renderList() {
+const btnTodos = document.getElementById("btn-todos");
+btnTodos.addEventListener("click", () => {
+    renderList();
+});
+
+const btnSemana = document.getElementById("btn-semana");
+btnSemana.addEventListener("click", () => {
+    renderList("ultima-semana");
+});
+
+const btnMes = document.getElementById("btn-mes");
+btnMes.addEventListener("click", () => {
+    renderList("ultimo-mes");
+});
+
+function renderList(filtro = "todos") {
 
     const registers = JSON.parse(localStorage.getItem("register")) || [];
 
@@ -11,12 +26,24 @@ function renderList() {
         "saida": "S - Saída"
     }
 
+    const dataAtual = new Date();
+    const registrosFiltrados = registers.filter(register => {
+        const dataRegistro = new Date(register.data.split("/").reverse().join("-"));
+        if (filtro === "ultima-semana") {
+            return(dataAtual - dataRegistro) <= (7 * 24 * 60 * 60 * 1000) && (dataAtual - dataRegistro) >= 0;
+        } else if (filtro === "ultimo-mes") {
+            return (dataAtual - dataRegistro) <= (30 * 24 * 60 * 60 * 1000) && (dataAtual - dataRegistro) >= 0;
+        }
+
+        return true;
+    })
+
     if (containerRegisters) {
         containerRegisters.innerHTML='';
 
         const grupoPorData = {};
         
-        registers.forEach(register => {
+        registrosFiltrados.forEach(register => {
             const data = register.data;
             if (!grupoPorData[data]) {
                 grupoPorData[data] = [];
@@ -24,7 +51,15 @@ function renderList() {
             grupoPorData[data].push(register);
         });
 
-        for (const data in grupoPorData) {
+        const datasOrdenadas = Object.keys(grupoPorData).sort((a, b) => {
+            const dataA = a.split("/").reverse().join("-");
+            const dataB = b.split("/").reverse().join("-");
+            //converte o formato das datas para que o JS possa comparar corretamente, no formato ano-mes-dia
+
+            return new Date(dataB) - new Date(dataA);
+        });
+
+        for (const data of datasOrdenadas) {
             const registrosPorData = grupoPorData[data];
 
             const divData = document.createElement("div");
@@ -65,10 +100,10 @@ function renderList() {
                 containerRegisters.appendChild(divRegistro);
             });
         }
-        
     } else {
         console.error("O container de registros não foi encontrado.");
     }
 }
 
 renderList();
+

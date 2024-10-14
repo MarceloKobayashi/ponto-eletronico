@@ -227,32 +227,35 @@ btnDialogEditarData.addEventListener("click", () => {
         const input = document.getElementById("input-dialog-data");
         let novaData = input.value;
 
-        if (novaData.length === 10 && dataValida(novaData) && !dataNoFuturo(novaData)) {
-            dataOriginal = novaData;
-            dialogData.textContent = "Data: " + novaData;
-            passado = true;
-        } else if (dataNoFuturo(novaData)){
+        if (dataNoFuturo(novaData)){
             novaData = getCurrentDate();
             dialogData.textContent = "Data: " + novaData;
             showAlert("Data no futuro! Insira uma data válida.", "error");
+            passado = false;
+        } else if (novaData.length === 10 && dataValida(novaData) && !dataNoFuturo(novaData)) {
+            dataOriginal = novaData;
+            dialogData.textContent = "Data: " + novaData;
+            passado = true;
         } else {
             novaData = getCurrentDate(); 
             dialogData.textContent = "Data: " + novaData;
             showAlert("Data inválida! Voltando para a data atual.", "error"); 
+            passado = false;
+        }
+
+        //Verifica se ao mudar a data, o usuário não tinha trocado para uma hora no futuro, Ex.: Troca a data para ontem (assim pode colocar uma hora adiantada) e depois troca para hoje
+        // permanecendo a hora no futuro. Essa parte serve para evitar isso.
+        let novaHora = horaOriginal;
+        if (horaNoFuturo(novaData, novaHora)) {
+            horaOriginal = getCurrentHour();
+            dialogHora.textContent = "Hora: " + horaOriginal;
+            showAlert("Hora no futuro! Voltando para a hora atual.", "error");
+            passado = false;
         }
 
         btnDialogEditarData.textContent = "Editar";
         editandoData = false;
 
-        //Verifica se ao mudar a data, o usuário não tinha trocado para uma hora no futuro, Ex.: Troca a data para ontem (assim pode colocar uma hora adiantada) e depois troca para hoje
-        // permanecendo a hora no futuro. Essa parte serve para evitar isso.
-        const inputHora = document.getElementById("input-dialog-hora");
-        let novaHora = inputHora ? inputHora.value : horaOriginal;
-        if (novaHora && horaNoFuturo(novaData, novaHora)) {
-            novaHora = getCurrentHour();
-            dialogHora.textContent = "Hora: " + novaHora;
-            showAlert("Hora no futuro! Voltando para a hora atual.", "error");
-        }
     }
 });
 
@@ -312,18 +315,20 @@ btnDialogEditarHora.addEventListener("click", () => {
         let novaHora = input.value;
         const novaData = dataOriginal;
 
-        if (novaHora.length === 8 && horaValida(novaHora) && !horaNoFuturo(novaData, novaHora)) {
-            horaOriginal = novaHora;
-            dialogHora.textContent = "Hora: " + novaHora;
-            passado = true;
-        } else if(horaNoFuturo(novaData, novaHora)) {
+        if(horaNoFuturo(novaData, novaHora)) {
             novaHora = getCurrentHour();
             dialogHora.textContent = "Hora: " + novaHora;
             showAlert("Hora no futuro! Voltando para a hora atual.", "error");
+            passado = false;
+        } else if (novaHora.length === 8 && horaValida(novaHora) && !horaNoFuturo(novaData, novaHora)) {
+            horaOriginal = novaHora;
+            dialogHora.textContent = "Hora: " + novaHora;
+            passado = true;
         } else {
             novaHora = getCurrentHour();
             dialogHora.textContent = "Hora: " + novaHora;
             showAlert("Hora inválida! voltando para a hora atual.", "error");
+            passado = false;
         }
 
         btnDialogEditarHora.textContent = "Editar";
