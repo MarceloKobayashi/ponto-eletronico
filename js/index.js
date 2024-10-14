@@ -17,6 +17,20 @@ async function getUserLocation() {
     });
 }
 
+const inputFile = document.getElementById("anexo");
+const fileLabel = document.getElementById("file-label");
+
+inputFile.addEventListener("change", () => {
+    if (inputFile.files.length > 0) {
+        const fileName = inputFile.files[0].name;
+        
+        fileLabel.textContent = fileName;
+    } else {
+        fileLabel.textContent = "Adicione seu arquivo";
+    }
+});
+
+//função para ler o conteúdo do arquivo, utiliza uma variável em btnDialogBaterPonto
 function lerArquivo(file) {
     return new Promise((resolve, reject) => {
         if (!file) {
@@ -38,6 +52,9 @@ function lerArquivo(file) {
             return;
         }
 
+        resolve(file.name);
+
+        /* Para ler o conteúdo do arquivo
         const reader = new FileReader();
         
         reader.onload = (event) => {
@@ -49,6 +66,7 @@ function lerArquivo(file) {
         };
 
         reader.readAsText(file);
+        */
     });
 }
 

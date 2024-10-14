@@ -1,3 +1,55 @@
+#header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    position: relative;
+
+    margin-bottom: 3rem;
+}
+
+#btn-home {
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    
+    font-size: 1rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    cursor: pointer;
+}
+
+#btn-home:hover {
+    background-color: black;
+    color: #E5E5E5;
+}
+
+#titulo {
+
+    font-size:2rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+    font-style: normal;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: max-content;
+}
+
+#legendas {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 5rem;
+
+    font-size: 1rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+    font-style: normal;
+
+    width: calc(100% - 10rem);
+}
+
 /*Legendas*/
 .color-box {
     display: inline-block;
@@ -15,11 +67,19 @@
 .red {
     background-color: red;
 }
+.green {
+    background-color: green;
+}
 
 .registro-dados {
     display: flex;
     align-items: center;
     margin-bottom: 0.3rem;
+
+    font-size: 1rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .tipo, .hora, .observacao, .arquivo {
@@ -32,18 +92,28 @@
 }
 
 .div-data {
-    font-size: 24px;
+    font-size: 1.5rem;
     font-weight: bold;
     color: #333; 
 }
 
-.registro-botoes {
+.registro-botoes{
     display: flex;
     gap: 1rem;
 }
 
-button {
+.registro-botoes button {
+    font-size: 1rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+    
     padding: 0.5rem 0.8rem;
+    border-radius: 0.5rem;
+}
+
+.registro-botoes button:hover {
+    background-color: black;
+    color: #E5E5E5;
 }
 
 .registros {
@@ -64,3 +134,21 @@ button {
     border-left: 0.3rem solid blue;
     padding-left: 0.6rem;
 }
+
+#btn-filtros button {
+
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.2rem;
+
+    font-size: 1rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    
+    cursor: pointer;
+}
+
+#btn-filtros button:hover {
+    
+    background-color: black;
+    color: #E5E5E5;
+}
+
