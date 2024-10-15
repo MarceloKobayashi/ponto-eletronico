@@ -1,4 +1,4 @@
-import showAlert from "./alert.js";
+import showAlert from './alert.js';
 
 const btnTodos = document.getElementById("btn-todos");
 btnTodos.addEventListener("click", () => {
@@ -125,11 +125,19 @@ function renderList(filtro = "todos") {
                     // Depois, ao clicar em "salvar", nesse dialog apareça a hora digitada ao inves
                     //da hora que estava originalmente
 
+                    
+
                 });
 
                 const btnEditarFechar = document.getElementById("btn-editar-fechar");
                 btnEditarFechar.addEventListener("click", () => {
                     dialogEditar.close();
+                });
+
+                const btnExcluir = divRegistro.querySelector(".btn-excluir");
+                btnExcluir.addEventListener("click", () => {
+
+                    showAlert("Não é possível excluir esse registro de ponto.", "error");
                 });
             
             });
