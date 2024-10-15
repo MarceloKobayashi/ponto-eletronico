@@ -32,6 +32,35 @@
         <!-- Registros serão incluídos no js -->
     </div>
 
+    <dialog id="dialog-editar">
+        <div class="div-dialog-editar-data">
+            <p id="dialog-editar-data"></p>
+        </div>
+        
+        <div class="div-dialog-editar-hora">
+            <p id="dialog-editar-hora"></p>
+            <button id="btn-dialog-editar-editar-hora">Editar</button>
+        </div>
+
+        <div class="div-editar-observacao">
+            <textarea id="editar-observacao" rows="4" cols="50"></textarea>
+        </div>
+    
+
+        <select name="editar-tipos-ponto" id="editar-tipos-ponto" class="setinha">
+            <option value="entrada">Entrada</option>
+            <option value="intervalo">Intervalo</option>
+            <option value="volta-intervalo">Volta Intervalo</option>
+            <option value="saida">Saida</option>
+        </select>
+
+        <button id="btn-dialog-editar-ponto">Salvar Alterações</button>
+        <p id="dialog-current-register"></p>
+
+        <button id="btn-editar-fechar">X</button>
+        
+    </dialog>
+
     <script type="module" src="js/relatorio.js"></script>
 </body>
 </html>

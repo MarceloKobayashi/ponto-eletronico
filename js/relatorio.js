@@ -1,3 +1,5 @@
+import showAlert from "./alert.js";
+
 const btnTodos = document.getElementById("btn-todos");
 btnTodos.addEventListener("click", () => {
     renderList();
@@ -67,7 +69,7 @@ function renderList(filtro = "todos") {
             divData.innerHTML = `<p>> ${data}: </p>`;
             containerRegisters.appendChild(divData);
 
-            registrosPorData.forEach(register => {         
+            registrosPorData.forEach((register, index) => {         
                 const divRegistro = document.createElement("div");
                 divRegistro.classList.add("registros");
 
@@ -98,6 +100,35 @@ function renderList(filtro = "todos") {
                 divRegistro.innerHTML = dadosRegistro;
                     
                 containerRegisters.appendChild(divRegistro);
+
+                const dialogEditar = document.getElementById("dialog-editar");
+                const dialogEditarData = document.getElementById("dialog-editar-data");
+                const dialogEditarHora = document.getElementById("dialog-editar-hora");
+                const dialogEditarObservacao = document.getElementById("editar-observacao");
+
+
+                const btnEditar = divRegistro.querySelector(".btn-editar");
+                btnEditar.addEventListener("click", () => {
+                    
+                    dialogEditarData.textContent = `Data: ${register.data}`;
+                    dialogEditarHora.textContent = `Hora: ${register.hora}`;
+
+                    if (dialogEditarObservacao) {
+                        dialogEditarObservacao.value = register.observação;
+                    } else {
+                        console.error("Elemento 'editar-observacao' não encontrado.");
+                    }
+                    
+                    dialogEditar.showModal();
+                });
+
+                
+
+                const btnEditarFechar = document.getElementById("btn-editar-fechar");
+                btnEditarFechar.addEventListener("click", () => {
+                    dialogEditar.close();
+                });
+            
             });
         }
     } else {
@@ -105,5 +136,8 @@ function renderList(filtro = "todos") {
     }
 }
 
-renderList();
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderList();
+});
 

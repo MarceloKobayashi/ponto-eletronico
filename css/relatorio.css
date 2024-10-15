@@ -152,3 +152,9 @@
     color: #E5E5E5;
 }
 
+#btn-editar-fechar {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
