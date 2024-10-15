@@ -329,7 +329,7 @@ document.addEventListener("DOMContentLoaded", () => {
             input.addEventListener("input", (hr) => {
                 input.value = formatarHora(hr.target.value);
             });
-        } else  {
+        } else {
             const input = document.getElementById("input-dialog-hora");
             let novaHora = input.value;
             const novaData = dataOriginal;

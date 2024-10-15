@@ -152,9 +152,104 @@
     color: #E5E5E5;
 }
 
+#dialog-editar {
+    padding: 1% 5%;
+}
+
+.div-dialog-editar-data {
+    display: flex;
+    align-items: center;
+
+    gap: 0 1rem;
+    
+    font-size: 3rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+}
+
+.div-dialog-editar-hora {
+    display: flex;
+    align-items: center;
+    
+    gap: 0 4rem;
+    
+    font-size: 3rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+}
+
+#btn-dialog-editar-editar-hora {
+    border-radius: 0.5rem;
+    
+    padding: 1.5% 7%;
+    
+    font-size: 2rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+}
+
+#btn-dialog-editar-editar-hora:hover {
+    background-color: black;
+    color: #E5E5E5;
+}
+
+.div-editar-observacao {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    border-radius: 0.5rem;
+    
+    height: 6.25rem;
+    width: 100%;
+    
+    box-sizing: border-box;
+    margin-bottom: 0.625rem;
+}
+
+.div-editar-observacao textarea, .div-editar-observacao input[type="file"] {
+    font-size: 1.6rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+}
+
 #btn-editar-fechar {
+    padding:  1.5% 3%;
+
     position: absolute;
     top: 1rem;
     right: 1rem;
+
+    font-size: 2rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
 }
 
+#btn-editar-fechar:hover {
+    background-color: red;
+}
+
+#editar-tipos-ponto {
+    padding: 2.5% 0;
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+}
+
+.setinha {
+    appearance: none;
+}
+
+#btn-dialog-editar-ponto {
+    padding: 2.5%;
+    font-size: 1.5rem;
+    font-family: "Nanum Gothic Coding", monospace;
+    font-weight: 400;
+}
+
+#btn-dialog-editar-ponto:hover {
+    background-color: black;
+    color: #E5E5E5;
+}

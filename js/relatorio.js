@@ -109,20 +109,23 @@ function renderList(filtro = "todos") {
 
                 const btnEditar = divRegistro.querySelector(".btn-editar");
                 btnEditar.addEventListener("click", () => {
-                    
-                    dialogEditarData.textContent = `Data: ${register.data}`;
-                    dialogEditarHora.textContent = `Hora: ${register.hora}`;
+                    dialogEditarData.textContent = `Data: ` + register.data;
+                    dialogEditarHora.textContent = `Hora: ` + register.hora;
+                    dialogEditarObservacao.textContent = register.observação;
 
-                    if (dialogEditarObservacao) {
-                        dialogEditarObservacao.value = register.observação;
-                    } else {
-                        console.error("Elemento 'editar-observacao' não encontrado.");
-                    }
-                    
                     dialogEditar.showModal();
                 });
 
+                const btnEditarHora = document.getElementById("btn-dialog-editar-editar-hora");
+                let editandoHora = false;
+                let horaOriginal = register.hora;
                 
+                btnEditarHora.addEventListener("click", () => {
+                    // Faça ao apertar aqui, aparecer uma caixa de texto input para digitar a hora
+                    // Depois, ao clicar em "salvar", nesse dialog apareça a hora digitada ao inves
+                    //da hora que estava originalmente
+
+                });
 
                 const btnEditarFechar = document.getElementById("btn-editar-fechar");
                 btnEditarFechar.addEventListener("click", () => {
@@ -135,7 +138,6 @@ function renderList(filtro = "todos") {
         console.error("O container de registros não foi encontrado.");
     }
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     renderList();
