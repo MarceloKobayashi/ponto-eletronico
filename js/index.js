@@ -119,11 +119,12 @@ document.addEventListener("DOMContentLoaded", () => {
                         "latitude": location.lat,
                         "longitude": location.long
                     },
-                    "id": 1,
+                    "id": geradorIdAutomatico(),
                     "tipo": selectedType,
                     "observação": observacaoPonto,
                     "arquivo": arquivoConteudo,
-                    "noPassado": passado
+                    "noPassado": passado,
+                    "editado": false
                 }
                 
                 console.log(ponto);
@@ -397,3 +398,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return dataInserida > dataAtual;
     }
 });
+
+function geradorIdAutomatico() {
+    const randomNum = Math.floor(Math.random() * 1000000000000);
+
+    const date = new Date();
+    const timeStamp = date.getTime();
+
+    return `id-${randomNum}-${timeStamp}`;
+}

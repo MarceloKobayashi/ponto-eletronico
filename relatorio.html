@@ -47,27 +47,32 @@
         </div>
         
         <div class="div-dialog-editar-hora">
-            <p id="dialog-editar-hora"></p>
-            <button id="btn-dialog-editar-editar-hora">Editar</button>
-        </div>
-
-        <div class="div-editar-observacao">
-            <textarea id="editar-observacao" rows="4" cols="50"></textarea>
+            <label for="editar-hora">Hora:</label>
+            <input type="text" id="editar-hora" />
         </div>
     
-
+        <div class="div-editar-observacao">
+            <label for="editar-observacao"></label>
+            <textarea id="editar-observacao" rows="4" cols="50"></textarea>
+        </div>
+        
+        <div class="div-editar-arquivo">
+            <label for="editar-arquivo" id="file-label" class="custom-file-upload">
+                Adicione seu arquivo.
+            </label>
+            <input type="file" id="editar-arquivo" style="display: none;"/>
+        </div>
+    
+        <label for="editar-tipos-ponto"></label>
         <select name="editar-tipos-ponto" id="editar-tipos-ponto" class="setinha">
             <option value="entrada">Entrada</option>
             <option value="intervalo">Intervalo</option>
             <option value="volta-intervalo">Volta Intervalo</option>
-            <option value="saida">Saida</option>
+            <option value="saida">Saída</option>
         </select>
-
+    
         <button id="btn-dialog-editar-ponto">Salvar Alterações</button>
-        <p id="dialog-current-register"></p>
-
         <button id="btn-editar-fechar">X</button>
-        
     </dialog>
 
     <script type="module" src="js/relatorio.js"></script>

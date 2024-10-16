@@ -15,36 +15,34 @@ btnMes.addEventListener("click", () => {
     renderList("ultimo-mes");
 });
 
+let registroAtual = null;
+
 function renderList(filtro = "todos") {
-
     const registers = JSON.parse(localStorage.getItem("register")) || [];
-
     const containerRegisters = document.getElementById("registros-relatorio");
 
     const tipoAbreviado = {
-        "entrada": "E - Entrada",
-        "intervalo": "I - Intervalo",
-        "volta-intervalo": "V - Volta intervalo",
-        "saida": "S - Saída"
-    }
+        "entrada": { nome: "E - Entrada", ordem: 1 },
+        "intervalo": { nome: "I - Intervalo", ordem: 2 },
+        "volta-intervalo": { nome: "V - Volta intervalo", ordem: 3 },
+        "saida": { nome: "S - Saída", ordem: 4 }
+    };
 
     const dataAtual = new Date();
     const registrosFiltrados = registers.filter(register => {
         const dataRegistro = new Date(register.data.split("/").reverse().join("-"));
         if (filtro === "ultima-semana") {
-            return(dataAtual - dataRegistro) <= (7 * 24 * 60 * 60 * 1000) && (dataAtual - dataRegistro) >= 0;
+            return (dataAtual - dataRegistro) <= (7 * 24 * 60 * 60 * 1000) && (dataAtual - dataRegistro) >= 0;
         } else if (filtro === "ultimo-mes") {
             return (dataAtual - dataRegistro) <= (30 * 24 * 60 * 60 * 1000) && (dataAtual - dataRegistro) >= 0;
         }
-
         return true;
-    })
+    });
 
     if (containerRegisters) {
-        containerRegisters.innerHTML='';
+        containerRegisters.innerHTML = '';
 
         const grupoPorData = {};
-        
         registrosFiltrados.forEach(register => {
             const data = register.data;
             if (!grupoPorData[data]) {
@@ -56,32 +54,44 @@ function renderList(filtro = "todos") {
         const datasOrdenadas = Object.keys(grupoPorData).sort((a, b) => {
             const dataA = a.split("/").reverse().join("-");
             const dataB = b.split("/").reverse().join("-");
-            //converte o formato das datas para que o JS possa comparar corretamente, no formato ano-mes-dia
-
             return new Date(dataB) - new Date(dataA);
         });
 
         for (const data of datasOrdenadas) {
             const registrosPorData = grupoPorData[data];
 
+            registrosPorData.sort((a, b) => {
+                
+                return tipoAbreviado[a.tipo].ordem - tipoAbreviado[b.tipo].ordem;
+            });
+
             const divData = document.createElement("div");
-            divData.classList.add("div-data")
+            divData.classList.add("div-data");
             divData.innerHTML = `<p>> ${data}: </p>`;
             containerRegisters.appendChild(divData);
 
-            registrosPorData.forEach((register, index) => {         
+            registrosPorData.forEach(register => {         
                 const divRegistro = document.createElement("div");
                 divRegistro.classList.add("registros");
+                
+                register.observação = register.observação || "Sem observação."; 
 
-                if (register.observação === "") {
-                    register.observação = "Sem observação.";
-                } else {
-                    const classeObservacao = divRegistro.classList.add("registro-observacao");
+                if (register.observação !== "Sem observação.") {
+                    divRegistro.classList.add("registro-observacao");
+                }
+                if (register.noPassado) {
+                    divRegistro.classList.remove("registro-observacao");
+                    divRegistro.classList.add("registro-passado");
+                }
+                if (register.editado) {
+                    divRegistro.classList.remove("registro-passado");
+                    divRegistro.classList.remove("registro-observacao");
+                    divRegistro.classList.add("registro-editado");
                 }
 
-                const tipoAbrev = tipoAbreviado[register.tipo];
+                const tipoAbrev = tipoAbreviado[register.tipo].nome;
 
-                const classePassado = register.noPassado ? divRegistro.classList.add("registro-passado") : '';
+
 
                 const dadosRegistro = `
                     <div>
@@ -98,54 +108,74 @@ function renderList(filtro = "todos") {
                     </div>
                 `;
                 divRegistro.innerHTML = dadosRegistro;
-                    
                 containerRegisters.appendChild(divRegistro);
-
-                const dialogEditar = document.getElementById("dialog-editar");
-                const dialogEditarData = document.getElementById("dialog-editar-data");
-                const dialogEditarHora = document.getElementById("dialog-editar-hora");
-                const dialogEditarObservacao = document.getElementById("editar-observacao");
-
 
                 const btnEditar = divRegistro.querySelector(".btn-editar");
                 btnEditar.addEventListener("click", () => {
-                    dialogEditarData.textContent = `Data: ` + register.data;
-                    dialogEditarHora.textContent = `Hora: ` + register.hora;
-                    dialogEditarObservacao.textContent = register.observação;
+                    registroAtual = register;
 
+                    document.getElementById("dialog-editar-data").textContent = `Data: ${register.data}`;
+                    document.getElementById("editar-hora").value = register.hora;
+                    document.getElementById("editar-observacao").value = register.observação;
+                    document.getElementById("editar-tipos-ponto").value = register.tipo;
+
+                    document.getElementById("file-label").textContent = register.arquivo ? register.arquivo : "Adicione seu arquivo.";
+
+                    const dialogEditar = document.getElementById("dialog-editar");
                     dialogEditar.showModal();
-                });
-
-                const btnEditarHora = document.getElementById("btn-dialog-editar-editar-hora");
-                let editandoHora = false;
-                let horaOriginal = register.hora;
-                
-                btnEditarHora.addEventListener("click", () => {
-                    // Faça ao apertar aqui, aparecer uma caixa de texto input para digitar a hora
-                    // Depois, ao clicar em "salvar", nesse dialog apareça a hora digitada ao inves
-                    //da hora que estava originalmente
-
-                    
-
-                });
-
-                const btnEditarFechar = document.getElementById("btn-editar-fechar");
-                btnEditarFechar.addEventListener("click", () => {
-                    dialogEditar.close();
                 });
 
                 const btnExcluir = divRegistro.querySelector(".btn-excluir");
                 btnExcluir.addEventListener("click", () => {
-
-                    showAlert("Não é possível excluir esse registro de ponto.", "error");
+                    showAlert("Não é possível excluir esse registro.", "error");
                 });
-            
             });
         }
     } else {
         console.error("O container de registros não foi encontrado.");
     }
 }
+
+const btnSalvar = document.getElementById("btn-dialog-editar-ponto");
+btnSalvar.addEventListener("click", () => {
+    if (registroAtual) {
+    
+        registroAtual.hora = document.getElementById("editar-hora").value;
+
+        const observacaoEditada = document.getElementById("editar-observacao").value;
+        registroAtual.observação = observacaoEditada === "" ? "Sem observação." : observacaoEditada;
+
+        registroAtual.tipo = document.getElementById("editar-tipos-ponto").value;
+
+        const arquivoInput = document.getElementById("editar-arquivo");
+        if (arquivoInput.files && arquivoInput.files.length > 0) {
+            const arquivo = arquivoInput.files[0];
+            registroAtual.arquivo = arquivo.name;
+        } else {
+            registroAtual.arquivo = registroAtual.arquivo || "Sem anexo";
+        }
+
+        const registers = JSON.parse(localStorage.getItem("register")) || [];
+        const index = registers.findIndex(r => r.id === registroAtual.id);
+        
+        if (index !== -1) {
+            registroAtual.editado = true;
+
+            registers[index] = registroAtual;
+            localStorage.setItem("register", JSON.stringify(registers));
+
+            renderList();
+            document.getElementById("dialog-editar").close();
+        } else {
+            showAlert("Registro não encontrado.", "error");
+        }
+    }
+});
+
+const btnFecharDialog = document.getElementById("btn-editar-fechar");
+btnFecharDialog.addEventListener("click", () => {
+    document.getElementById("dialog-editar").close();
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     renderList();
