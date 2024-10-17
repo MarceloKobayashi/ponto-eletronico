@@ -57,12 +57,25 @@ function renderList(filtro = "todos") {
             return new Date(dataB) - new Date(dataA);
         });
 
+        let fundoBranco = true;
+
         for (const data of datasOrdenadas) {
             const registrosPorData = grupoPorData[data];
 
             registrosPorData.sort((a, b) => {
+                const tipoOrdem = tipoAbreviado[a.tipo].ordem - tipoAbreviado[b.tipo].ordem;
                 
-                return tipoAbreviado[a.tipo].ordem - tipoAbreviado[b.tipo].ordem;
+                if (tipoOrdem === 0) {
+                    const horaA = a.hora.split(":").map(Number);
+                    const horaB = b.hora.split(":").map(Number);
+                
+                    const segundosA = (horaA[0] * 3600) + (horaA[1] * 60) + horaA[2];
+                    const segundosB = (horaB[0] * 3600) + (horaB[1] * 60) + horaB[2];
+                
+                    return segundosA - segundosB;
+                }
+
+                return tipoOrdem;
             });
 
             const divData = document.createElement("div");
@@ -73,19 +86,27 @@ function renderList(filtro = "todos") {
             registrosPorData.forEach(register => {         
                 const divRegistro = document.createElement("div");
                 divRegistro.classList.add("registros");
+                divRegistro.classList.add("registro-padrao");
+
+                if (fundoBranco) {
+                    divRegistro.classList.add("registro-branco");
+                } else {
+                    divRegistro.classList.add("registro-cinza");
+                }
+                fundoBranco = !fundoBranco;
                 
                 register.observação = register.observação || "Sem observação."; 
 
                 if (register.observação !== "Sem observação.") {
+                    divRegistro.classList.remove("registro-padrao");
                     divRegistro.classList.add("registro-observacao");
                 }
                 if (register.noPassado) {
-                    divRegistro.classList.remove("registro-observacao");
+                    divRegistro.classList.remove("registro-padrao");
                     divRegistro.classList.add("registro-passado");
                 }
                 if (register.editado) {
-                    divRegistro.classList.remove("registro-passado");
-                    divRegistro.classList.remove("registro-observacao");
+                    divRegistro.classList.remove("registro-padrao");
                     divRegistro.classList.add("registro-editado");
                 }
 
@@ -121,6 +142,11 @@ function renderList(filtro = "todos") {
 
                     document.getElementById("file-label").textContent = register.arquivo ? register.arquivo : "Adicione seu arquivo.";
 
+                    const horaInput = document.getElementById("editar-hora");
+                    horaInput.addEventListener("input", (e) => {
+                        horaInput.value = formatarHora(e.target.value);
+                    });
+                    
                     const dialogEditar = document.getElementById("dialog-editar");
                     dialogEditar.showModal();
                 });
@@ -140,8 +166,18 @@ const btnSalvar = document.getElementById("btn-dialog-editar-ponto");
 btnSalvar.addEventListener("click", () => {
     if (registroAtual) {
     
-        registroAtual.hora = document.getElementById("editar-hora").value;
+        const horaInput = document.getElementById("editar-hora").value;
+        
+        if (!verificarHoraValida(horaInput, registroAtual.hora)) {
+            return;
+        }
 
+        if (registroAtual.hora !== horaInput) {
+            registroAtual.noPassado = true;
+        }
+
+        registroAtual.hora = horaInput;
+        
         const observacaoEditada = document.getElementById("editar-observacao").value;
         registroAtual.observação = observacaoEditada === "" ? "Sem observação." : observacaoEditada;
 
@@ -176,6 +212,38 @@ const btnFecharDialog = document.getElementById("btn-editar-fechar");
 btnFecharDialog.addEventListener("click", () => {
     document.getElementById("dialog-editar").close();
 });
+
+function formatarHora(hora) {
+    hora = hora.replace(/\D/g, "");
+
+    if (hora.length <= 2) {
+        return hora;
+    } else if (hora.length <= 4) {
+        return hora.slice(0, 2) + ":" + hora.slice(2, 4);
+    } else {
+        return hora.slice(0, 2) + ":" + hora.slice(2, 4) + ":" + hora.slice(4, 6);
+    }
+}
+
+function verificarHoraValida(horaInput, horaAtual) {
+    const horaRegex = /^([0-1]\d|2[0-3]):([0-5]\d):([0-5]\d)$/;
+    if (!horaRegex.test(horaInput)) {
+        showAlert("Formato de hora inválido. Use o formato HH:MM:SS.", "error");
+        return false;
+    }
+
+    const [horaInputH, horaInputM, horaInputS] = horaInput.split(":").map(Number);
+    const [horaAtualH, horaAtualM, horaAtualS] = horaAtual.split(":").map(Number);
+
+    const horaInputSegundos = (horaInputH * 3600) + (horaInputM * 60) + horaInputS;
+    const horaAtualSegundos = (horaAtualH * 3600) + (horaAtualM * 60) + horaAtualS;
+
+    if (horaInputSegundos > horaAtualSegundos) {
+        showAlert("Hora no futuro!", "error");
+        return false;
+    }
+    return true;
+}
 
 document.addEventListener("DOMContentLoaded", () => {
     renderList();

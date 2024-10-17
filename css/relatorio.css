@@ -62,13 +62,21 @@
     background-color: black;
 }
 .blue {
-    background-color: blue;
+    background-color: #00A3E0;
 }
 .red {
-    background-color: red;
+    background-color: #ff6f61;
 }
 .green {
-    background-color: green;
+    background-color: #8ccb3d;
+}
+
+.registro-branco {
+    background-color: #f5f5f5;
+}
+
+.registro-cinza {
+    background-color: #ffffff;
 }
 
 .registro-dados {
@@ -117,29 +125,94 @@
 }
 
 .registros {
-    border-left: 0.3rem solid;
+    position: relative;
     padding-left: 0.6rem;
+}
+
+.registro-padrao {
+    color: black;
+}
+
+.registro-padrao::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.3rem;
+    background: black;
 }
 
 .registro-passado {
-    color: red;
-    background-color: #f0f0f0;
-    border-left: 0.3rem solid red;
-    padding-left: 0.6rem;
+    color: #ff6f61;
+}
+
+.registro-passado::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.3rem;
+    background: #ff6f61;
+}
+
+
+.registro-observacao {
+    color: #00A3E0;
+}
+
+.registro-observacao::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.3rem;
+    background: #00A3E0;
 }
 
 .registro-editado {
-    color: green;
-    background-color: #C4C4C4;
-    border-left: 0.3rem solid green;
-    padding-left: 0.6rem;
+    color: #8ccb3d;
 }
 
-.registro-observacao {
-    color: blue;
-    background-color: #dbdada;
-    border-left: 0.3rem solid blue;
-    padding-left: 0.6rem;
+.registro-editado::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.3rem;
+    background: #8ccb3d;
+}
+
+.registro-passado.registro-observacao.registro-editado::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0.3rem;
+    background: linear-gradient(to bottom, 
+        #ff6f61 0%,
+        #ff6f61 33.33%,
+        #00A3E0 33.33%,
+        #00A3E0 66.66%,
+        #8ccb3d 66.66%,
+        #8ccb3d 100%
+    );
+}
+
+.registro-passado.registro-observacao::before {
+    background: linear-gradient(to bottom, #ff6f61 50%, #00A3E0 50%);
+}
+
+.registro-passado.registro-editado::before {
+    background: linear-gradient(to bottom, #ff6f61 50%, #8ccb3d 50%);
+}
+
+.registro-observacao.registro-editado::before {
+    background: linear-gradient(to bottom, #00A3E0 50%, #8ccb3d 50%);
 }
 
 
