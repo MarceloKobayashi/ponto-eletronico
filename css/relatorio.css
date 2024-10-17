@@ -131,88 +131,69 @@
 
 .registro-padrao {
     color: black;
+
+    border-left: 0.3rem solid black;
+    padding-left: 0.6rem;
 }
 
-.registro-padrao::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0.3rem;
-    background: black;
-}
 
 .registro-passado {
     color: #ff6f61;
-}
 
-.registro-passado::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0.3rem;
-    background: #ff6f61;
+    border-left: 0.3rem solid #ff6f61;
+    padding-left: 0.6rem;
 }
-
 
 .registro-observacao {
     color: #00A3E0;
-}
 
-.registro-observacao::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0.3rem;
-    background: #00A3E0;
+    border-left: 0.3rem solid #00A3E0;
+    padding-left: 0.6rem;
 }
 
 .registro-editado {
     color: #8ccb3d;
+
+    border-left: 0.3rem solid #8ccb3d;
+    padding-left: 0.6rem;
 }
 
-.registro-editado::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0.3rem;
-    background: #8ccb3d;
+.registro-passado.registro-observacao.registro-editado {
+    border-left-width: 0.3rem;
+    border-left-style: solid;
+    border-image: linear-gradient(to bottom,
+        #ff6f61 0%, 
+        #ff6f61 33.33%, 
+        #00A3E0 33.33%, 
+        #00A3E0 66.66%, 
+        #8ccb3d 66.66%, 
+        #8ccb3d 100%) 1;
+    
+    padding-left: 0.6rem;
 }
 
-.registro-passado.registro-observacao.registro-editado::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 0.3rem;
-    background: linear-gradient(to bottom, 
-        #ff6f61 0%,
-        #ff6f61 33.33%,
-        #00A3E0 33.33%,
-        #00A3E0 66.66%,
-        #8ccb3d 66.66%,
-        #8ccb3d 100%
-    );
+.registro-passado.registro-observacao {
+    border-left-width: 0.3rem;
+    border-left-style: solid;
+    border-image: linear-gradient(to bottom, #ff6f61 50%, #00A3E0 50%) 1;
+
+    padding-left: 0.6rem;
 }
 
-.registro-passado.registro-observacao::before {
-    background: linear-gradient(to bottom, #ff6f61 50%, #00A3E0 50%);
+.registro-passado.registro-editado {
+    border-left-width: 0.3rem;
+    border-left-style: solid;
+    border-image: linear-gradient(to bottom, #ff6f61 50%, #8ccb3d 50%) 1;
+
+    padding-left: 0.6rem;
 }
 
-.registro-passado.registro-editado::before {
-    background: linear-gradient(to bottom, #ff6f61 50%, #8ccb3d 50%);
-}
+.registro-observacao.registro-editado {
+    border-left-width: 0.3rem;
+    border-left-style: solid;
+    border-image: linear-gradient(to bottom, #00A3E0 50%, #8ccb3d 50%) 1;
 
-.registro-observacao.registro-editado::before {
-    background: linear-gradient(to bottom, #00A3E0 50%, #8ccb3d 50%);
+    padding-left: 0.6rem;
 }
 
 
