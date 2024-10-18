@@ -1,4 +1,5 @@
 # Sistema de Cadastro de Ponto Eletrônico
+- Sistema para bater ponto em determinado momento, podendo alterar a data e a hora para um momento anterior ao atual.
 
 ## Tela Inicial
 - Exibe o dia da semana, a data e a hora, sendo atualizados a cada segundo.
