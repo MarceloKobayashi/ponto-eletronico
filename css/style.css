@@ -2,7 +2,7 @@
     text-align: center;
 }
 
-#btn-bater-ponto {
+#btn-bater-ponto, #btn-cadastrar-usuario {
     width: 31.25rem;
     padding: 3% 9.4%;
     border-radius: 0.5rem;
@@ -15,7 +15,7 @@
     margin: auto;
 }
 
-#btn-bater-ponto:hover {
+#btn-bater-ponto:hover, #btn-cadastrar-usuario:hover {
     color: #E5E5E5;
     background-color: black;
 
