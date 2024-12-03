@@ -128,6 +128,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
                 
                 console.log(ponto);
+
+                fetch('http://localhost:3000/ponto', {
+                    method: "POST",
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        dataHora: dataCorretaParaRegistro + " " + horaCorretaParaRegistro,
+                        tipo: selectedType,
+                        id_usuario: 1,
+                        localizacao: `{lat: ${location.lat}, long: ${location.long}}`
+                    })
+                })
+                .then(() => {
+                    console.log("Ponto criado com sucesso.")
+                })
+                .catch(() => {
+                    console.log("Erro ao criar ponto.")
+                })
                 
                 saveRegisterLocalStorage(ponto);
                 localStorage.setItem("lastTypeRegister", selectedType);

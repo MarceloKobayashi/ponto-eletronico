@@ -17,6 +17,38 @@ btnMes.addEventListener("click", () => {
 
 let registroAtual = null;
 
+async function getPontos() {
+
+    const containerRegisters = document.getElementById("registros-relatorio");
+
+    fetch('http://localhost:3000/pontos/usuario/1')
+    //Trata os metadados da req
+    .then((metaData) => {
+        console.log("Sucesso!");
+        //console.log(metaData);
+
+        //Retorna algo assíncrono
+        return metaData.json();
+    })
+    //data é resultado dos metadados em json
+    .then((data) => {
+        //console.log(data);
+        data.forEach(ponto => {
+            const divPonto = document.createElement("div");
+            divPonto.innerHTML = `<p> Data/Hora: ${ponto.dataHora} | Tipo: ${ponto.tipo}</p><button id="btn-excluir-ponto">X</button>`;
+            containerRegisters.appendChild(divPonto);
+        }) 
+
+    })
+    .catch((error) => {
+        console.error("Erro ao exibir: ", error)
+    });
+}
+
+document.getElementById("btn-excluir-ponto").addEventListener("click", async () => {
+    const response = await fetch("http://localhost:3000/ponto/")
+});
+
 function renderList(filtro = "todos") {
     const registers = JSON.parse(localStorage.getItem("register")) || [];
     const containerRegisters = document.getElementById("registros-relatorio");
@@ -246,6 +278,7 @@ function verificarHoraValida(horaInput, horaAtual) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    renderList();
+    //renderList();
+    getPontos();
 });
 

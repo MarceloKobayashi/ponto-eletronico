@@ -2,7 +2,7 @@ document.getElementById("btn-criar-usuario").addEventListener("click", async () 
 
     const nome = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
-    const login = document.getElementById("login").value;
+    const login = document.getElementById("login").value;   
     const senha = document.getElementById("senha").value;
     const permissao = document.getElementById("tipo").value;
     
