@@ -178,7 +178,7 @@ btnSalvar.addEventListener("click", () => {
 
         registroAtual.hora = horaInput;
         
-        const observacaoEditada = document.getElementById("editar-observacao").value;
+        const observacaoEditada = limparInput(document.getElementById("editar-observacao").value);
         registroAtual.observação = observacaoEditada === "" ? "Sem observação." : observacaoEditada;
 
         registroAtual.tipo = document.getElementById("editar-tipos-ponto").value;
@@ -249,3 +249,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderList();
 });
 
+//Evita que código HTML malicioso entre no sistema
+function limparInput(input) {
+    return input.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}

@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
             let selectedType = typeRegisterElement.value;
             const location = await getUserLocation();
 
-            const observacaoPonto = document.getElementById("observacao").value;
+            const observacaoPonto = sanitizeInput(limparInput(document.getElementById("observacao").value));
             const arquivoPonto = document.getElementById("anexo").files[0];
             try {
 
@@ -406,4 +406,15 @@ function geradorIdAutomatico() {
     const timeStamp = date.getTime();
 
     return `id-${randomNum}-${timeStamp}`;
+}
+
+//Evita que código HTML malicioso entre no sistema
+function limparInput(input) {
+    return input.replace(/[<>\"\'&]/g, ''); // Remove caracteres perigosos
+}
+
+function sanitizeInput(input) {
+    const div = document.createElement('div');
+    div.textContent = input; // Escapa caracteres especiais como '<', '>', etc.
+    return div.innerHTML;
 }
